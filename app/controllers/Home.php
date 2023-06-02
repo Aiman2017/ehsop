@@ -5,12 +5,12 @@ class Home extends Controller
 {
     public function index()
     {
+        $data = [];
         $user = $this->loadModel('User');
-        $userData = $user->checkLogin();
+        // the false in the checklogin its mean that user can access to the home page even if the user is not logged in
+        $userData = $user->checkLogin(false);
         if (is_array($userData)) {
             $data['userData'] = $userData;
-        }else {
-            $this->view("index");
         }
         $this->view("index", $data);
     }

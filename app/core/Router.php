@@ -6,10 +6,9 @@ class Router
     protected $controller = "home";
     protected $method = "index";
     protected $params = [];
-    //not load page when the user already logged in
     protected $notAllowedURL = [
         'login',
-        'signup',
+        'signup'
     ];
 
     private function routeApp($url)
@@ -20,7 +19,6 @@ class Router
             if (in_array($url[0], $this->notAllowedURL) && !empty($_SESSION['url_address'])) {
                 $url[0] = 'home';
             }
-
             $this->controller = strtolower($url[0]);
             unset($url[0]);
         }else {
@@ -46,6 +44,6 @@ class Router
 
     public function getRouterURL($url)
     {
-       $this->routeApp($url);
+        $this->routeApp($url);
     }
 }

@@ -134,18 +134,41 @@ class User
         }
         return $text;
     }
-    public function checkLogin()
+
+    public function checkLogin($redirect = false, $allowed = [])
     {
-       if (isset($_SESSION['url_address'])) {
-           $data['url'] = $_SESSION['url_address'];
-           $query = "SELECT * FROM users WHERE url_address = :url limit 1";
-           $db = Database::getInstance();
-           $result = $db->read($query, $data);
-           if (is_array($result)) {
-               return $result[0];
-           }
-       }
-       return false;
+        $db = Database::getInstance();
+        // if something in admin controller, if he is an admin, he will redirect to admin page
+        if (count($allowed) > 0) {
+            $data['url'] = $_SESSION['url_address'];
+            $query = "SELECT rank, name from users WHERE url_address = :url LIMIT 1";
+            $result = $db->read($query, $data);
+            if (is_array($result)) {
+                $result = $result[0];
+                //if the user is an admin, he will access to the admin page
+                if (in_array($result['rank'], $allowed)) {
+                    return $result;
+                }
+                //if user wants to access to the admin page, and he is not an admin the page will redirect to the home page
+                redirect('');
+            }
+        }else {
+            // if user is logged in, the user will get his info from database
+            if (isset($_SESSION['url_address'])) {
+                $data = false;
+                $data = ['url' => $_SESSION['url_address']];
+                $query = "SELECT * FROM users WHERE url_address = :url LIMIT 1";
+                $result = $db->read($query, $data);
+                if (is_array($result)) {
+                    return $result[0];
+                }
+            }
+            // if the user is not logged in(false), and wants to access the page cart or checkout, he will redirect to login page
+            if ($redirect) {
+                redirect('login');
+            }
+        }
+        return false;
     }
 
     public function logout()

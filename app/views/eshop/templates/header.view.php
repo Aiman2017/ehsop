@@ -1,6 +1,7 @@
 <?php
 /**
  * @var $title
+ * @var $userData
  */
 ?>
 <!DOCTYPE html>
@@ -14,6 +15,7 @@
 
     <link href="<?= ASSETS. '/' . THEME?>css/bootstrap.min.css" rel="stylesheet">
     <link href="<?= ASSETS. '/' . THEME?>css/font-awesome.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
     <link href="<?= ASSETS. '/' . THEME?>css/prettyPhoto.css" rel="stylesheet">
     <link href="<?= ASSETS. '/' . THEME?>css/price-range.css" rel="stylesheet">
     <link href="<?= ASSETS. '/' . THEME?>css/animate.css" rel="stylesheet">
@@ -39,12 +41,11 @@
                     <div class="contactinfo">
                         <ul class="nav nav-pills">
                             <li><a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
-                            <li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
                             <?php if (isset($userData['userData'])) :?>
-                            <li><a href="#"><i class="fa fa-user"></i>  <?=$userData['userData']['name'];?></a></li>
+                                <li><a href="#"><i class="fa fa-envelope"></i> <?=$userData['userData']['email'];?></a></li>
+                                <li><a href="<?=ROOT?>profile"><i class="fa fa-user"></i> <?=$userData['userData']['name'];?></a></li>
                             <?php endif;?>
-
-                        </ul>
+                         </ul>
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -96,12 +97,15 @@
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
-                            <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
-                            <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
-                            <?php if (!empty($userData['userData']['url_address'])):?>
-                            <li><a href="checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                            <?php if (isset($userData['userData']) && $userData['userData']['rank'] === 'admin'):?>
+                                <li><a href="<?=ROOT?>admin"><i class="fa fa-user-md"> Admin</i></a></li>
                             <?php endif;?>
-                            <li><a href="cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            <?php if(!empty($userData['userData']['url_address'])) :?>
+                            <li><a href="<?=ROOT?>profile"><i class="fa fa-user"></i> Account</a></li>
+                            <li><a href="checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                             <li><a href="cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            <?php endif;?>
+                            <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
                             <?php if (!empty($userData)):?>
                             <li><a href="<?=ROOT?>logout"><i class="fa fa-lock"></i> Logout</a></li>
                                <?php else:?>

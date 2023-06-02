@@ -25,3 +25,4 @@ if (DEBUG) {
 
 //THEME
 const THEME = "eshop/";
+const ADMIN_ASSETS = ASSETS . "/". THEME . "admin";

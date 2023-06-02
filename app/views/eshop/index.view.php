@@ -759,4 +759,4 @@
 			</div>
 		</div>
 	</section>
-<?php $this->view("templates/footer")?>
+<?php $this->view("templates/footer", ['userData' => $data])?>

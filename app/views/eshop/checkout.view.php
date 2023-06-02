@@ -242,4 +242,4 @@
 	</section> <!--/#cart_items-->
 
 
-<?php $this->view("templates/footer")?>
+<?php $this->view("templates/footer", ['userData' => $data])?>
