@@ -7,8 +7,10 @@ class Admin extends Controller
         $data = [];
         $user = $this->loadModel('User');
         $userData = $user->checkLogin(true, ['admin']);
-        if (is_array($userData)) {
+        if (is_array($userData) && $userData['rank'] === 'admin') {
             $data['userData'] = $userData;
+        }else {
+            redirect('');
         }
         $this->view('admin/index', $data);
     }

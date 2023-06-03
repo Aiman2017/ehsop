@@ -138,7 +138,7 @@ class User
     public function checkLogin($redirect = false, $allowed = [])
     {
         $db = Database::getInstance();
-        // if something in admin controller, if he is an admin, he will redirect to admin page
+        //if something in admin controller, if he is an admin, he will redirect to admin page
         if (count($allowed) > 0) {
             $data['url'] = $_SESSION['url_address'];
             $query = "SELECT rank, name from users WHERE url_address = :url LIMIT 1";
